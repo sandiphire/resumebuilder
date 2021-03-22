@@ -1,0 +1,29 @@
+{
+	"folders": {},
+	"connections": {
+		"sqlite_jdbc-178494b918d-3f24a235e6ac7cdc": {
+			"provider": "generic",
+			"driver": "sqlite_jdbc",
+			"name": "data.db",
+			"save-password": true,
+			"read-only": false,
+			"configuration": {
+				"database": "D:\\resumebuilderproj\\data.db",
+				"url": "jdbc:sqlite:D:\\resumebuilderproj\\data.db",
+				"type": "dev",
+				"auth-model": "native",
+				"handlers": {}
+			}
+		}
+	},
+	"connection-types": {
+		"dev": {
+			"name": "Development",
+			"color": "255,255,255",
+			"description": "Regular development database",
+			"auto-commit": true,
+			"confirm-execute": false,
+			"confirm-data-change": false
+		}
+	}
+}

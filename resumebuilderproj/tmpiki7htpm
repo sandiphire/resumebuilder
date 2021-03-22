@@ -1,0 +1,83 @@
+from flask import Flask, request
+from flask_restful import Resource, Api
+# from security import auth, identity
+# from flask_jwt import JWT, jwt_required
+from user import SignUp
+import database
+import sys
+
+app = Flask(__name__)
+app.config['SECRET_KEY'] = 'Hard to guess'
+api = Api(app)
+
+
+class Role(Resource):
+    def __init__(self):
+        pass
+    def get(self):
+        role_id = request.get_json()
+        conn = database.connect()
+        id = role_id['role_id']
+        role_desc = database.get_role_by_id(conn, id)
+        conn.close()
+        return {'role_desc':role_desc}, 200
+    
+    def post(self):
+        role_json = request.get_json()
+        conn = database.connect()
+        role_desc = role_json['role_desc']
+        database.insert_role(conn, role_desc)
+        conn.close()
+        return {'you sent': role_json}, 201
+
+class Multi(Resource):
+    def get(self, num):
+        return {'result': num *10}
+
+
+# Data = []
+class Resume(Resource):
+    def __init__(self):
+        pass
+    
+    
+    def get(self):
+        role_id = request.get_json()
+        conn = database.connect() 
+        id = role_id['role_id']
+        resume = database.get_resume_by_i('id')
+        
+        
+        return resume.jsonify()
+    
+#     def post(self ,name):
+#         Tem = {'Data':name}
+#         Data.append(Tem)
+#         return Tem
+    
+#     def delete(self,name):
+#         for ind, x in enumerate(Data):
+#             if x['Data'] == name:
+#                 Tem = Data.pop(ind)
+#                 return {'Note':'Deleted'}
+
+# api.add_resource(People,'/Name/<string:name>')
+
+
+api.add_resource(Multi, '/multi/<int:num>')
+api.add_resource(SignUp, '/signup')
+api.add_resource(Role,'/role')
+
+
+
+# Post API- add employee details http://localhost:9090/emp/add
+# c.execute("""CREATE TABLE resume (
+#         resume_id integer,
+#         user_id text,
+#         resume_type_id integer,
+#         role_id blob
+#     )""")
+
+if __name__ =='__main__':
+    app.run(debug=True)
+    
